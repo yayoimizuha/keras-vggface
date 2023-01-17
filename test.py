@@ -1,18 +1,16 @@
 import numpy as np
 from keras_vggface import VGGFace
-from keras.preprocessing import image
+from keras.preprocessing.image import image_utils
 from keras_vggface import utils
-import keras
 import unittest
-
-
+from keras.backend import image_data_format
 class VGGFaceTests(unittest.TestCase):
 
     def testVGG16(self):
-        keras.backend.image_data_format()
+        image_data_format()
         model = VGGFace(model='vgg16')
-        img = image.load_img('image/ajb.jpg', target_size=(224, 224))
-        x = image.img_to_array(img)
+        img = image_utils.load_img('image/ajb.jpg', target_size=(224, 224))
+        x = image_utils.img_to_array(img)
         x = np.expand_dims(x, axis=0)
         x = utils.preprocess_input(x, version=1)
         preds = model.predict(x)
@@ -23,10 +21,10 @@ class VGGFaceTests(unittest.TestCase):
         self.assertAlmostEqual(utils.decode_predictions(preds)[0][0][1], 0.9790116, places=3)
 
     def testRESNET50(self):
-        keras.backend.image_data_format()
+        image_data_format()
         model = VGGFace(model='resnet50')
-        img = image.load_img('image/ajb.jpg', target_size=(224, 224))
-        x = image.img_to_array(img)
+        img = image_utils.load_img('image/ajb.jpg', target_size=(224, 224))
+        x = image_utils.img_to_array(img)
         x = np.expand_dims(x, axis=0)
         x = utils.preprocess_input(x, version=2)
         preds = model.predict(x)
@@ -37,10 +35,10 @@ class VGGFaceTests(unittest.TestCase):
         self.assertAlmostEqual(utils.decode_predictions(preds)[0][0][1], 0.91819614, places=3)
 
     def testSENET50(self):
-        keras.backend.image_data_format()
+        image_data_format()
         model = VGGFace(model='senet50')
-        img = image.load_img('image/ajb.jpg', target_size=(224, 224))
-        x = image.img_to_array(img)
+        img = image_utils.load_img('image/ajb.jpg', target_size=(224, 224))
+        x = image_utils.img_to_array(img)
         x = np.expand_dims(x, axis=0)
         x = utils.preprocess_input(x, version=2)
         preds = model.predict(x)
